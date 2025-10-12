@@ -1,4 +1,4 @@
-package com.leanpay.loancalculator.model;
+package com.leanpay.loancalculator.model.rest;
 
 import lombok.Data;
 
