@@ -25,14 +25,19 @@ Where:
 
 ---
 
-## API Endpoint
+## API Documentation
 
-### **POST** `/api/loan/calculate`
+This project includes API documentation using **Swagger UI**.
 
-#### Request Body
-```json
-{
-  "amount": 1000,
-  "annualInterestPercent": 5,
-  "numberOfMonths": 10
-}
+After starting the application, open:
+👉 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+---
+
+## UML Class Diagram
+![Class Diagram](docs/class-diagram.png)
+
+---
+
+## Sequence Diagram
+![Sequence Diagram](docs/sequence-diagram.png)

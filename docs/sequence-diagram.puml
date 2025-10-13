@@ -1,0 +1,21 @@
+@startuml
+title Loan Calculation Flow - Sequence Diagram
+
+actor User
+participant "LoanController" as C
+participant "LoanService" as S
+participant "LoanMapper" as M
+participant "LoanRepository" as R
+
+User -> C : POST /api/v1/loan/calculate\nLoanRequest JSON
+C -> S : calculateLoan(LoanRequest)
+S -> S : calculateMonthlyPayment()
+S -> M : toEntity(amount, interest, months, monthlyPayment, totalPayment)
+M --> S : LoanEntity
+S -> R : save(LoanEntity)
+R --> S : LoanEntity (persisted)
+S -> M : toResponse(monthlyPayment, totalPayment)
+M --> S : LoanResponse
+S --> C : LoanResponse
+C --> User : HTTP 200 OK + JSON Response
+@enduml

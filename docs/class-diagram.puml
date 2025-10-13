@@ -1,0 +1,61 @@
+@startuml
+title Loan Calculator - Class Diagram
+
+package "Controller" {
+  class LoanController {
+    +calculateLoan(loanRequest: LoanRequest): ResponseEntity<LoanResponse>
+  }
+}
+
+package "Service" {
+  class LoanService {
+    -loanRepository: LoanRepository
+    -loanMapper: LoanMapper
+    +calculateLoan(loanRequest: LoanRequest): LoanResponse
+    -calculateMonthlyPayment(annualInterestPercent: BigDecimal, amount: BigDecimal, numberOfMonths: int, monthlyRate: BigDecimal): BigDecimal
+  }
+}
+
+package "Mapper" {
+  class LoanMapper {
+    +toEntity(amount: BigDecimal, annualInterestPercent: BigDecimal, numberOfMonths: int, monthlyPayment: BigDecimal, totalPayment: BigDecimal): LoanEntity
+    +toResponse(monthlyPayment: BigDecimal, totalPayment: BigDecimal): LoanResponse
+  }
+}
+
+package "Repository" {
+  interface LoanRepository {
+    +save(entity: LoanEntity): LoanEntity
+  }
+}
+
+package "Model" {
+  class LoanEntity {
+    -id: Long
+    -amount: BigDecimal
+    -annualInterestPercent: BigDecimal
+    -numberOfMonths: int
+    -monthlyPayment: BigDecimal
+    -totalPayment: BigDecimal
+    -createdAt: LocalDateTime
+  }
+
+  class LoanRequest {
+    -amount: BigDecimal
+    -annualInterestPercent: BigDecimal
+    -numberOfMonths: int
+  }
+
+  class LoanResponse {
+    -monthlyPayment: BigDecimal
+    -totalPayment: BigDecimal
+  }
+}
+
+LoanController --> LoanService : uses
+LoanService --> LoanRepository : persists
+LoanService --> LoanMapper : maps
+LoanRepository --> LoanEntity : manages
+LoanMapper --> LoanEntity : builds
+LoanMapper --> LoanResponse : builds
+@enduml
