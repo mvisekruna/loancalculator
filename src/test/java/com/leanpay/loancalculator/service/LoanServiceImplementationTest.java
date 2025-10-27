@@ -5,6 +5,7 @@ import com.leanpay.loancalculator.model.persistance.LoanEntity;
 import com.leanpay.loancalculator.model.rest.LoanRequest;
 import com.leanpay.loancalculator.model.rest.LoanResponse;
 import com.leanpay.loancalculator.repository.LoanRepository;
+import com.leanpay.loancalculator.service.implementation.LoanServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class LoanServiceTest {
+class LoanServiceImplementationTest {
 
     @Mock
     private LoanRepository loanRepository;
@@ -28,7 +29,7 @@ class LoanServiceTest {
     private LoanMapper loanMapper;
 
     @InjectMocks
-    private LoanService loanService;
+    private LoanServiceImplementation loanServiceImplementation;
 
     @BeforeEach
     void setUp() {
@@ -54,7 +55,7 @@ class LoanServiceTest {
         when(loanMapper.toEntity(eq(amount), eq(interest), eq(months), any(), any()))
                 .thenReturn(new LoanEntity());
 
-        LoanResponse response = loanService.calculateLoan(request);
+        LoanResponse response = loanServiceImplementation.calculateLoan(request);
 
         assertThat(response.getMonthlyPayment()).isEqualByComparingTo("102.31");
         assertThat(response.getTotalPayment()).isEqualByComparingTo("1023.10");
@@ -78,7 +79,7 @@ class LoanServiceTest {
         when(loanMapper.toEntity(eq(amount), eq(interest), eq(months), any(), any()))
                 .thenReturn(new LoanEntity());
 
-        LoanResponse response = loanService.calculateLoan(request);
+        LoanResponse response = loanServiceImplementation.calculateLoan(request);
 
         assertThat(response.getMonthlyPayment()).isEqualByComparingTo("200.00");
         assertThat(response.getTotalPayment()).isEqualByComparingTo("1200.00");

@@ -2,7 +2,7 @@ package com.leanpay.loancalculator.controller;
 
 import com.leanpay.loancalculator.model.rest.LoanRequest;
 import com.leanpay.loancalculator.model.rest.LoanResponse;
-import com.leanpay.loancalculator.service.LoanService;
+import com.leanpay.loancalculator.service.implementation.LoanServiceImplementation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/loan")
 public class LoanController {
 
-    private final LoanService loanService;
+    private final LoanServiceImplementation loanServiceImplementation;
 
     @PostMapping("/calculate")
     public ResponseEntity<LoanResponse> calculateLoan(@Valid @RequestBody LoanRequest loanRequest) {
-        return ResponseEntity.ok(loanService.calculateLoan(loanRequest));
+        return ResponseEntity.ok(loanServiceImplementation.calculateLoan(loanRequest));
     }
 
 }
